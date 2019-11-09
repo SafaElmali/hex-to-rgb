@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap');
+
+html,
+body {
+    background: #282C34;
+}
+
+.title-props {
+    font-family: 'Bowlby One SC', cursive;
+    color: #fff;
+    margin-top: 5%;
+}
+
+.text-props {
+    color: #fff;
+}
+
+.field-prop {
+    width: 600px;
+    margin: auto;
+}
+
+.search-prop {
+    border-left: 1px solid lightgray;
+}
+
+.card-title-props {
+    font-family: 'Bowlby One SC', cursive;
+}
