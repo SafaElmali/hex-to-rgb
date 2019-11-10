@@ -1,7 +1,7 @@
 import React from 'react';
 import { PulseLoader } from 'react-spinners';
 
-export const Spinner = (props) => {
+export const Spinner = props => {
     return (
         <div className="row mt-4">
             <div className="col-12 text-center">

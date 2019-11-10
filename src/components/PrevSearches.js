@@ -5,7 +5,7 @@ export const PrevSearches = (props) =>
     (
         <div className="card">
             <div className="card-header text-center card-text-props">
-                Your previous searches will be displayed in here <span role="img" aria-label="emoji">👇</span>
+                Your searches will be displayed in here <span role="img" aria-label="emoji">👇</span>
             </div>
             <div className="card-body prev-card-props">
                 {props.searchList.length > 0 ? props.searchList.map((value, index) =>

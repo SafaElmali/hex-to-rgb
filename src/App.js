@@ -49,7 +49,7 @@ class App extends Component {
       let blue = parseInt(value.slice(4, 6), 16);
 
       if (Number.isNaN(red) || Number.isNaN(green) || Number.isNaN(blue)) {
-        notValidHexCode();
+        notValidHexCode(this.state.value);
         return;
       }
 
