@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { PulseLoader } from 'react-spinners';
+
 class App extends Component {
   constructor() {
     super();
@@ -8,9 +9,12 @@ class App extends Component {
       value: '',
       loading: false,
       displayRgb: false,
-      r: 0,
-      g: 0,
-      b: 0
+      color: {
+        r: 0,
+        g: 0,
+        b: 0,
+      },
+      searchList: sessionStorage.getItem("prevSearches") == null ? [] : JSON.parse(sessionStorage.getItem("prevSearches")),
     }
 
     this.hexToRgb = this.hexToRgb.bind(this);
@@ -18,6 +22,8 @@ class App extends Component {
   }
 
   invalidHexCode = () => toast.warn('Please enter a valid hex code!', { autoClose: 3500 });
+  checkPoundSign = () => toast.warn('Please enter hex code without "#" sign!', { autoClose: 3500 });
+  notValidHexCode = () => toast.warn(`'${this.state.value}' is not a valid hex code!`, { autoClose: 3500 });
 
   handleHex = event => {
     this.setState({ value: event.target.value });
@@ -27,28 +33,48 @@ class App extends Component {
     if (this.state.value.trim() === '') {
       this.invalidHexCode();
       this.setState({
-        value: ""
+        value: "",
       });
       return;
     } else {
-
       let { value } = this.state;
+
+      if (value.startsWith('#')) {
+        this.checkPoundSign();
+        return;
+      }
+
       let red = parseInt(value.slice(0, 2), 16);
       let green = parseInt(value.slice(2, 4), 16);
       let blue = parseInt(value.slice(4, 6), 16);
 
-      this.setState({ loading: true });
+      if (Number.isNaN(red) || Number.isNaN(green) || Number.isNaN(blue)) {
+        this.notValidHexCode();
+        return;
+      }
 
+      this.setState({ loading: true });
       setTimeout(() => {
         this.setState({
           loading: false,
           displayRgb: true,
-          r: red,
-          g: green,
-          b: blue
-        })
+          color: {
+            r: red,
+            g: green,
+            b: blue,
+          }
+        });
+        this.setSessionStorage();
       }, 1500);
     }
+  }
+
+  setSessionStorage = () => {
+    this.setState({
+      searchList: this.state.searchList.concat(this.state.color)
+    });
+
+    sessionStorage.setItem("prevSearches", JSON.stringify(this.state.searchList));
   }
 
   handleKeyPress = event => {
@@ -75,7 +101,7 @@ class App extends Component {
                   <span className="input-group-text" id="inputGroupPrepend"><i className="fas fa-hashtag"></i>
                   </span>
                 </div>
-                <input type="text" className="form-control" placeholder="e.g 282C34" onChange={this.handleHex} onKeyPress={this.handleKeyPress} required />
+                <input type="text" className="form-control" placeholder="e.g 282C34" maxLength="7" onChange={this.handleHex} onKeyPress={this.handleKeyPress} required />
                 <div className="input-group-append">
                   <span onClick={this.hexToRgb} className="input-group-text" id="search"><i className="fas fa-search"></i></span>
                 </div>
@@ -85,7 +111,19 @@ class App extends Component {
         </div>
         <Spinner loading={this.state.loading} />
         <GithubCorner />
-        {this.state.displayRgb ? <DisplayRgb red={this.state.r} green={this.state.g} blue={this.state.b} /> : null}
+        {this.state.displayRgb ? <DisplayRgb isPrev={false} red={this.state.color.r} green={this.state.color.g} blue={this.state.color.b} /> : null}
+        <hr className="line-props" />
+        <div className="card">
+          <div className="card-header text-center header-text-props">
+            Your previous searches <span role="img" aria-label="emoji">👇</span>
+          </div>
+          <div className="card-body prev-card-props">
+            {this.state.searchList.length > 0 ? this.state.searchList.map((value, index) =>
+              <DisplayRgb isPrev={true} red={value.r} green={value.g} blue={value.b} key={index} />
+            ) : 'null'
+            }
+          </div>
+        </div>
       </div>
     )
   }
@@ -108,36 +146,57 @@ const Spinner = (props) => {
   )
 }
 
-const DisplayRgb = (props) => {
-  return (
-    <div className="card mt-3" style={{ width: '18rem', margin: 'auto' }}>
-      <div className="card-header text-center card-title-props" style={{ color: `rgb(${props.red},${props.green},${props.blue})` }}>
-        rgb({props.red},{props.green},{props.blue})
-    </div>
-      <div className="card-body">
-        <div style={{ width: 50, height: 50, backgroundColor: `rgb(${props.red},${props.green},${props.blue})`, margin: 'auto', border: '3px solid gray' }}>
+const DisplayRgb = props => {
+
+  const copyToClipboard = () => toast.success(`Color copied to clipboard! Wohoo! 🚀`, { autoClose: 3500 });
+
+  const handleCopyRgb = () => {
+    navigator.clipboard.writeText(`rgb(${props.red},${props.green},${props.blue})`);
+    copyToClipboard();
+  }
+
+  return props.isPrev === true ?
+    (
+      <div className="card mt-3" style={{ width: '18rem' }}>
+        <div className="card-header text-center card-title-props" style={{ color: `rgb(${props.red},${props.green},${props.blue})` }}>
+          <span>rgb({props.red},{props.green},{props.blue})</span>
+          <button onClick={handleCopyRgb} className="copy-button mt-2">Copy this rgb</button>
         </div>
-      </div>
-    </div >
-  )
+        <div className="card-body">
+          <div style={{ width: 50, height: 50, backgroundColor: `rgb(${props.red},${props.green},${props.blue})`, margin: 'auto', border: '3px solid gray' }}>
+          </div>
+        </div>
+      </div >
+    ) :
+    (
+      <div className="card mt-3" style={{ width: '18rem', margin: 'auto' }}>
+        <div className="card-header text-center card-title-props" style={{ color: `rgb(${props.red},${props.green},${props.blue})` }}>
+          <span>rgb({props.red},{props.green},{props.blue})</span>
+          <button onClick={handleCopyRgb} className="copy-button mt-2">Copy this rgb</button>
+        </div>
+        <div className="card-body">
+          <div style={{ width: 50, height: 50, backgroundColor: `rgb(${props.red},${props.green},${props.blue})`, margin: 'auto', border: '3px solid gray' }}>
+          </div>
+        </div>
+      </div >
+    )
 }
 
 const GithubCorner = () => {
   return (
     <div>
-      <a href="https://github.com/SafaElmali/hexToRgb" target="_blank" class="github-corner" aria-label="View source on GitHub" rel="noopener noreferrer">
+      <a href="https://github.com/SafaElmali/hexToRgb" target="_blank" className="github-corner" aria-label="View source on GitHub" rel="noopener noreferrer">
         <svg width="80" height="80" viewBox="0 0 250 250" style={{ fill: '#FC6C6C', color: '#fff', position: 'absolute', top: 0, border: 0, right: 0, }} aria-hidden="true">
           <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z">
           </path>
-          <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style={{ transformOrigin: '130px 106px' }} class="octo-arm">
+          <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style={{ transformOrigin: '130px 106px' }} className="octo-arm">
           </path>
-          <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body">
+          <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" className="octo-body">
           </path>
         </svg>
       </a>
     </div >
   )
-
 }
 
 export default App;

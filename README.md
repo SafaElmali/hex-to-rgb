@@ -70,8 +70,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### Todo
 
-- [ ] Github Corners - http://tholman.com/github-corners/
+- [x] Github Corners - http://tholman.com/github-corners/
 - [ ] Auto Complete
-- [ ] Previous Searches
+- [x] Previous Searches
 - [ ] RGB - To - Hex
-- [ ] Copy To Clipboard
+- [x] Copy To Clipboard
