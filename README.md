@@ -4,6 +4,9 @@
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ef5f2659-1349-4c18-af02-3502dde2fc7e/deploy-status)](https://app.netlify.com/sites/hextorgb/deploys)
+
+<img src="./src/assets/demo/hex-to-rgb.gif" />
+
 </div>
 
 # Table Of Content
