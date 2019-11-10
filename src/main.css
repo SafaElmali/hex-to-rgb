@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 html,
 body {
@@ -95,4 +96,6 @@ body {
     flex-wrap: wrap;
 }
 
-.header-text-props {}
+.card-text-props {
+    font-family: 'Open Sans', sans-serif;
+}
