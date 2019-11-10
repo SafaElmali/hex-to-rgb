@@ -79,6 +79,7 @@ npm start
 ## References
 
 - [Rgb (red,green and blue)](https://whatis.techtarget.com/definition/RGB-red-green-and-blue)
+- [How to Convert Hexadecimal to Decimal and Decimal to Hex Manually](https://owlcation.com/stem/Convert-Hex-to-Decimal)
 
 ## Libraries That I Used
 
