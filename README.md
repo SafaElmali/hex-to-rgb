@@ -60,7 +60,7 @@ So we get our hex code from the user and parse it into three seperate variable:
 
 ## Install
 
-[npm][]:
+[npm]():
 
 - First install node_modules:
 
