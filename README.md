@@ -19,8 +19,8 @@
     - [Code](#code)
   - [Install](#install)
   - [References](#references)
-  - [Libraries That I Used](#libraries-that-i-used)
-  - [Todo](#todo)
+  - [Toolbox Of This Project](#toolbox-of-this-project)
+  - [TODO List](#todo-list)
 
 ## What is Hexadecimal?
 
@@ -81,14 +81,14 @@ npm start
 - [Rgb (red,green and blue)](https://whatis.techtarget.com/definition/RGB-red-green-and-blue)
 - [How to Convert Hexadecimal to Decimal and Decimal to Hex Manually](https://owlcation.com/stem/Convert-Hex-to-Decimal)
 
-## Libraries That I Used
+## Toolbox Of This Project 🧰 
 
 - [react](https://tr.reactjs.org/)
 - [bootstrap](https://www.npmjs.com/package/bootstrap)
 - [react-spinners](https://www.npmjs.com/package/react-spinners)
 - [react-toastify](https://www.npmjs.com/package/react-toastify)
 
-## Todo
+## TODO List
 
 - [x] Github Corners - http://tholman.com/github-corners/
 - [ ] Auto Complete
