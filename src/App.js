@@ -14,54 +14,52 @@ class App extends Component {
       loading: false,
       displayRgb: false,
       color: {
-        r: 0,
-        g: 0,
-        b: 0,
+        red: 0,
+        green: 0,
+        blue: 0,
       },
-      searchList: sessionStorage.getItem("prevSearches") == null ? [] : JSON.parse(sessionStorage.getItem("prevSearches")),
+      searchList: []
     }
-
-    this.hexToRgb = this.hexToRgb.bind(this);
-    this.handleHex = this.handleHex.bind(this);
   }
 
-  handleHex = event => {
-    this.setState({ value: event.target.value });
+  componentWillMount() {
+    this.setState({
+      searchList: sessionStorage.getItem("prevSearches") == null ? [] : JSON.parse(sessionStorage.getItem("prevSearches")),
+    })
   }
 
-  hexToRgb = () => {
-    if (this.state.value.trim() === '') {
-      invalidHexCode();
+  handleHex = event => this.setState({ value: event.target.value });
+
+  convertHexToRgb = () => {
+    const { value } = this.state;
+
+    if (value.trim() === '') {
       this.setState({
         value: "",
       });
-      return;
+      return invalidHexCode();
     } else {
-      let { value } = this.state;
-
-      if (value.startsWith('#')) {
-        checkPoundSign();
-        return;
-      }
+      if (value.startsWith('#')) return checkPoundSign();
 
       let red = parseInt(value.slice(0, 2), 16);
       let green = parseInt(value.slice(2, 4), 16);
       let blue = parseInt(value.slice(4, 6), 16);
 
-      if (Number.isNaN(red) || Number.isNaN(green) || Number.isNaN(blue)) {
-        notValidHexCode(this.state.value);
-        return;
-      }
+      if (Number.isNaN(red) || Number.isNaN(green) || Number.isNaN(blue)) return notValidHexCode(value);
 
-      this.setState({ loading: true });
+      this.setState({
+        loading: true,
+
+      });
+
       setTimeout(() => {
         this.setState({
           loading: false,
           displayRgb: true,
           color: {
-            r: red,
-            g: green,
-            b: blue,
+            red,
+            green,
+            blue,
           }
         });
         this.setSessionStorage();
@@ -70,55 +68,54 @@ class App extends Component {
   }
 
   setSessionStorage = () => {
-    this.setState({
-      searchList: this.state.searchList.concat(this.state.color)
-    });
+    const { searchList, color } = this.state;
 
-    sessionStorage.setItem("prevSearches", JSON.stringify(this.state.searchList));
+    this.setState({
+      searchList: searchList.concat(color)
+    }, () => {
+      const { searchList } = this.state;
+      sessionStorage.setItem("prevSearches", JSON.stringify(searchList))
+    })
   }
 
   handleKeyPress = event => {
-    if (event.key === 'Enter') {
-      this.hexToRgb();
-    } else {
-      return;
-    }
+    if (event.key === 'Enter') this.convertHexToRgb();
   }
 
   render() {
+    const { color, searchList, loading, displayRgb } = this.state;
+
     return (
-      <div className="container-fluid">
+      <div>
         <ToastContainer position={toast.POSITION.TOP_RIGHT} />
         <div className="row">
-          <div className="col-12">
+          <div className="col-12" style={{ padding: "30px 30px 0px 30px" }}>
             <div className="title-props text-center">
               <h1>Hex-to-RGB</h1>
             </div>
             <div className="col-md-4 mx-auto mt-3">
               <label className="text-props">Hex Code</label>
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text" id="inputGroupPrepend"><i className="fas fa-hashtag"></i>
-                  </span>
-                </div>
-                <input type="text" className="form-control" placeholder="e.g 282C34" maxLength="7" onChange={this.handleHex} onKeyPress={this.handleKeyPress} required />
-                <div className="input-group-append">
-                  <span onClick={this.hexToRgb} className="input-group-text" id="search"><i className="fas fa-search"></i></span>
-                </div>
+              <div style={{ position: 'relative' }}>
+                <i class="fas fa-hashtag icon-props"></i>
+                <input type="text" className="form-control input-props" placeholder="e.g 282C34" maxLength="7" onChange={this.handleHex} onKeyPress={this.handleKeyPress} required />
+                <i class="fas fa-search search-icon-props" onClick={this.convertHexToRgb} style={{ cursor: 'pointer' }} id="search"></i>
+                {/* <span onClick={this.convertHexToRgb} style={{ cursor: 'pointer' }} className="input-group-text" id="search"><i className="fas fa-search"></i></span> */}
+              </div>
+              <div className="input-group-append">
               </div>
             </div>
           </div>
         </div>
-        <Spinner loading={this.state.loading} />
+        <Spinner loading={loading} />
         <GithubCorner />
-        {this.state.displayRgb ? <DisplayRgb isPrev={false} red={this.state.color.r} green={this.state.color.g} blue={this.state.color.b} /> : null}
-        <hr className="line-props" />
-        <PrevSearches searchList={this.state.searchList} />
+        {displayRgb ? <DisplayRgb color={color} /> : null}
+        <hr />
+        <div>
+          <PrevSearches searchList={searchList} />
+        </div>
       </div>
     )
   }
 }
-
-
 
 export default App;

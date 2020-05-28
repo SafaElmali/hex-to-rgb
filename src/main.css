@@ -1,101 +1,141 @@
-@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Bowlby+One+SC&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 
 html,
 body {
-    background: #282C34;
+  background: #7f7fd5; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #91eae4,
+    #86a8e7,
+    #7f7fd5
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #91eae4,
+    #86a8e7,
+    #7f7fd5
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  margin: 0;
 }
 
 .title-props {
-    font-family: 'Bowlby One SC', cursive;
-    color: #fff;
-    margin-top: 5%;
+  font-family: "Bowlby One SC", cursive;
+  color: #fff;
 }
 
 .text-props {
-    color: #fff;
+  color: #fff;
 }
 
 .field-prop {
-    width: 600px;
-    margin: auto;
+  width: 600px;
+  margin: auto;
 }
 
 .search-prop {
-    border-left: 1px solid lightgray;
+  border-left: 1px solid lightgray;
 }
 
 .card-title-props {
-    font-family: 'Bowlby One SC', cursive;
+  font-family: "Bowlby One SC", cursive;
 }
 
 .copy-button {
-    filter: drop-shadow(1px 2px 2px gray);
-    border-width: 1px;
-    border-radius: 15px;
-    background: deepskyblue;
-    color: #fff;
-    border-color: darkseagreen;
-    -webkit-filter: drop-shadow(1px 2px 2px gray);
+  filter: drop-shadow(1px 2px 2px gray);
+  border-width: 1px;
+  border-radius: 15px;
+  background: deepskyblue;
+  color: #fff;
+  border-color: darkseagreen;
+  -webkit-filter: drop-shadow(1px 2px 2px gray);
 }
 
 .copy-button:focus {
-    outline: 0;
+  outline: 0;
 }
 
 .copy-button:active {
-    border-style: none;
+  border-style: none;
 }
 
 .github-corner:hover .octo-arm {
-    animation: octocat-wave 560ms ease-in-out
+  animation: octocat-wave 560ms ease-in-out;
 }
 
 @keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
 
-    0%,
-    100% {
-        transform: rotate(0)
-    }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
 
-    20%,
-    60% {
-        transform: rotate(-25deg)
-    }
-
-    40%,
-    80% {
-        transform: rotate(10deg)
-    }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
 }
 
-@media (max-width:500px) {
-    .github-corner:hover .octo-arm {
-        animation: none;
-        -webkit-animation: none;
-    }
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+    -webkit-animation: none;
+  }
 
-    .github-corner .octo-arm {
-        animation: octocat-wave 560ms ease-in-out;
-        -webkit-animation: octocat-wave 560ms ease-in-out;
-    }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+    -webkit-animation: octocat-wave 560ms ease-in-out;
+  }
 }
 
-.input-group>.custom-select:not(:last-child),
-.input-group>.form-control:not(:last-child) {
-    border-bottom-right-radius: 1px !important;
+.search-icon-props {
+  color: #545b62;
+  cursor: pointer;
+  position: absolute;
+  right: 25px;
+  font-size: 20px;
+  bottom: 15px;
+}
+
+.search-icon-props:hover {  
+  color: #7f7fd5;
+}
+
+.icon-props {
+  color: #545b62;
+  position: absolute;
+  font-size: 20px;
+  z-index: 99;
+  bottom: 15px;
+  left: 15px;
+}
+
+.input-props {
+  border-radius: 30px;
+  height: 50px;
+  opacity: 0.8;
+  padding-left: 35px;
 }
 
 .line-props {
-    border-top: 1px solid #fff;
+  border-top: 1px solid #fff;
 }
 
 .prev-card-props {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .card-text-props {
-    font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
