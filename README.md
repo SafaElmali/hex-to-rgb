@@ -95,3 +95,7 @@ npm start
 - [x] Previous Searches
 - [ ] RGB - To - Hex
 - [x] Copy To Clipboard
+
+## License
+
+Hex-To-Rgb is [MIT licensed](./LICENSE).
