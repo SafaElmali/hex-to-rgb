@@ -40,6 +40,21 @@ class App extends Component {
       return invalidHexCode();
     } else {
       if (value.startsWith('#')) return checkPoundSign();
+      
+      const digits = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
+      let flag = 0;
+
+      for(let i=0; i<6; i++)
+      {
+        let dig = value.charAt(i)
+        for(let j=0;j<16;j++)
+        {
+          if(dig===digits[j])
+            flag = 1;
+        }
+      }
+
+      if(flag===0) return notValidHexCode(value);
 
       let red = parseInt(value.slice(0, 2), 16);
       let green = parseInt(value.slice(2, 4), 16);
@@ -97,7 +112,7 @@ class App extends Component {
               <label className="text-props">Hex Code</label>
               <div style={{ position: 'relative' }}>
                 <i class="fas fa-hashtag icon-props"></i>
-                <input type="text" className="form-control input-props" placeholder="e.g 282C34" maxLength="7" onChange={this.handleHex} onKeyPress={this.handleKeyPress} required />
+                <input type="text" className="form-control input-props" placeholder="e.g 282C34" maxLength="6" onChange={this.handleHex} onKeyPress={this.handleKeyPress} required />
                 <i class="fas fa-search search-icon-props" onClick={this.convertHexToRgb} style={{ cursor: 'pointer' }} id="search"></i>
                 {/* <span onClick={this.convertHexToRgb} style={{ cursor: 'pointer' }} className="input-group-text" id="search"><i className="fas fa-search"></i></span> */}
               </div>
