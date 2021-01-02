@@ -106,7 +106,7 @@ body {
   bottom: 15px;
 }
 
-.search-icon-props:hover {  
+.search-icon-props:hover {
   color: #7f7fd5;
 }
 
@@ -132,10 +132,20 @@ body {
 
 .prev-card-props {
   display: flex;
-  justify-content: space-evenly;
   flex-wrap: wrap;
+}
+
+.card {
+  margin: 0px 15px;
 }
 
 .card-text-props {
   font-family: "Open Sans", sans-serif;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
