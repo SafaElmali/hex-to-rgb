@@ -81,9 +81,6 @@ npm start
 - [Rgb (red,green and blue)](https://whatis.techtarget.com/definition/RGB-red-green-and-blue)
 - [How to Convert Hexadecimal to Decimal and Decimal to Hex Manually](https://owlcation.com/stem/Convert-Hex-to-Decimal)
 
-## License
-
-Hex-To-Rgb is [MIT licensed](./LICENSE).
 
 ## Toolbox Of This Project 🧰 
 
@@ -99,4 +96,9 @@ Hex-To-Rgb is [MIT licensed](./LICENSE).
 - [x] Previous Searches
 - [ ] RGB - To - Hex
 - [x] Copy To Clipboard
+
+## License
+
+hex-to-rgb is [MIT licensed](./LICENSE).
+
 
