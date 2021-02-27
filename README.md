@@ -100,5 +100,3 @@ npm start
 ## License
 
 hex-to-rgb is [MIT licensed](./LICENSE).
-
-
